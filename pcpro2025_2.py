@@ -15,81 +15,13 @@ import random
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 from helpers import PreferencesDialog, LogWindow, PropertiesDialog
+from filters import SampleDialog
 
 import numpy as np
 import open3d as o3d
 
 
-class SampleDialog(QDialog):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Sample Pointcloud")
 
-        layout = QVBoxLayout(self)
-
-        # Sample type input (dropdown)
-        self.sample_type_label = QLabel("Sample Type:", self)
-        layout.addWidget(self.sample_type_label)
-
-        self.sample_type_combobox = QComboBox(self)
-        self.sample_type_combobox.addItems(["Random Sample", "Regular Sample", "Voxel Downsample"])
-        self.sample_type_combobox.currentTextChanged.connect(self.update_visibility)
-        layout.addWidget(self.sample_type_combobox)
-
-        # Percentage input
-        self.percentage_label = QLabel("Sample Percentage (%):", self)
-        layout.addWidget(self.percentage_label)
-
-        self.percentage_spinbox = QSpinBox(self)
-        self.percentage_spinbox.setRange(1, 100)
-        self.percentage_spinbox.setValue(10)  # Default value
-        layout.addWidget(self.percentage_spinbox)
-
-        # Voxel size input
-        self.voxel_size_label = QLabel("Voxel Size:", self)
-        layout.addWidget(self.voxel_size_label)
-
-        self.voxel_size_spinbox = QDoubleSpinBox(self)
-        self.voxel_size_spinbox.setRange(0.01, 10.0)  # Adjust range as needed
-        self.voxel_size_spinbox.setDecimals(2)  # Allow precision up to 2 decimal places
-        self.voxel_size_spinbox.setValue(0.1)  # Default value
-        layout.addWidget(self.voxel_size_spinbox)
-
-        # Dialog buttons
-        self.buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel,
-                                        self)
-        self.buttons.accepted.connect(self.accept)
-        self.buttons.rejected.connect(self.reject)
-        layout.addWidget(self.buttons)
-
-        # Set initial visibility
-        self.update_visibility()
-
-    def update_visibility(self):
-        """Toggle visibility of input fields based on the selected sampling type."""
-        sample_type = self.sample_type_combobox.currentText()
-        if sample_type == "Voxel Downsample":
-            self.percentage_label.hide()
-            self.percentage_spinbox.hide()
-            self.voxel_size_label.show()
-            self.voxel_size_spinbox.show()
-        else:  # "Random Sample" or "Regular Sample"
-            self.percentage_label.show()
-            self.percentage_spinbox.show()
-            self.voxel_size_label.hide()
-            self.voxel_size_spinbox.hide()
-
-    def get_percentage(self):
-        """Retrieve the percentage input."""
-        return self.percentage_spinbox.value()
-
-    def get_sample_type(self):
-        """Retrieve the selected sampling type."""
-        return self.sample_type_combobox.currentText()
-
-    def get_voxel_size(self):
-        """Retrieve the voxel size input."""
-        return self.voxel_size_spinbox.value()
 
 
 class Open3DViewer:
