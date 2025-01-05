@@ -11,6 +11,7 @@ import open3d as o3d
 import warnings
 
 import random
+import laspy
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
@@ -18,10 +19,6 @@ from helpers import PreferencesDialog, LogWindow, PropertiesDialog
 from filters import SampleDialog
 
 import numpy as np
-import open3d as o3d
-
-
-
 
 
 class Open3DViewer:
@@ -192,10 +189,6 @@ class MainWindow(QMainWindow):
         print("Opening sample dialog...")  # Debugging
 
         # Define sampling methods as nested functions
-
-        import open3d as o3d
-        import numpy as np
-        import random
 
         def sample_pointcloud_random(pointcloud, percentage):
             """Randomly sample the given point cloud based on percentage, retaining colors."""
@@ -427,8 +420,6 @@ class MainWindow(QMainWindow):
 
     def load_las_to_open3d_chunked(self, file_path, transform_settings, max_points=1_000_000):
         """Load .las file and convert to Open3D point cloud in chunks."""
-        import laspy
-        import numpy as np
 
         with laspy.open(file_path) as las_file:
             header = las_file.header
@@ -486,10 +477,7 @@ class MainWindow(QMainWindow):
         super().closeEvent(event)
 
 
-
-
-
-
+# used for checking, remove from production
 def visualize_pointcloud(pointcloud):
     """
     Visualize a given Open3D point cloud.

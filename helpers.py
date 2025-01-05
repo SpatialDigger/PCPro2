@@ -81,12 +81,19 @@ class PropertiesDialog(QDialog):
 
         self.text_area.setText(point_cloud_info)
 
+
 class LogWindow(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Event Log")
-        self.setGeometry(200, 200, 600, 400)
+        self.setFixedSize(600, 400)
 
+        # Get screen geometry to position the dialog on the right
+        screen_geometry = QApplication.primaryScreen().availableGeometry()  # Gets the screen size
+        screen_width = screen_geometry.width()
+        self.move(screen_width - self.width(), 200)  # Position dialog at the right
+
+        # Set layout and widgets
         self.layout = QVBoxLayout()
 
         self.log_text_edit = QTextEdit()
