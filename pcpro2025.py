@@ -394,8 +394,6 @@ class MainWindow(QMainWindow):
         except Exception as e:
             self.add_log_message(f"Failed to add point cloud: {str(e)}")
 
-    # def add_log_message(self, message):
-    #     print(message)
 
     def show_properties(self, item):
         """
@@ -421,7 +419,6 @@ class MainWindow(QMainWindow):
                 self.add_log_message(f"No data found for child item '{child_name}' under parent '{parent_name}'.")
                 return
         else:
-            # If the item is a parent, get its data
             # If the item is a parent, get its data
             parent_name = item_text
 
